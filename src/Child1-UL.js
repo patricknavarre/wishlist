@@ -24,24 +24,12 @@ export class Child1UL extends Component {
     this.props.editUpdateWish(id, this.state.toggleInput);
   };
 
-  makePriority = (id) => {
-    console.log(118);
-  // let priority = this.state.wishList.map((item) => {
-  //   if (item.id === id) {
-  //     priority === !isPriority
-  //   }
-  //   return priority;
-  // })
-  // this.setState({
-  //     wishList: priority,
-  // })
-}
 
 
   render() {
     return (
       <ul>
-        {this.props.wishList.map((item) => {
+        {this.props.wishList.map((item, index) => {
           let strikeThroughClass = `${item.isDone ? "strike-through-isDone" : ""}`;
   
           return (
@@ -77,10 +65,27 @@ export class Child1UL extends Component {
              propsName={"Delete"}
              />
 
-            <label for="priority"> Make Priority </label>
-            <input propsOnClick={this.makePriority(item.id)} name="makepriority" id="priority" type="checkbox"></input>
-            
-             
+            <input 
+            type="checkbox"
+            id={`favorite-${index}`}
+            name="favorite"
+            defaultValue={item.isFavorite}
+            style={{ margin: "5px 5px" }} 
+            checked={item.isFavorite}
+            onChange={() => 
+            this.props.handleFavoriteClick(
+              item.id,
+              index,
+              item.isFavorite 
+            )
+            }
+            />
+            <label htmlFor={`favorite-${index}`}
+            style={{ margin: "5px 5px" }}
+            > 
+            {" "}
+            Favorite This 
+            </label>
              
               <br />
 

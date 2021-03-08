@@ -13,7 +13,7 @@ class Parent extends Component {
         isDone: false,
         isEditToggle: false,
         isButtonToggle: false,
-        isPriority: false,
+        isFavorite: false,
       },
       {
         id: uuidv4(),
@@ -21,7 +21,7 @@ class Parent extends Component {
         isDone: false,
         isEditToggle: false,
         isButtonToggle: false,
-        isPriority: false,
+        isFavorite: false,
       },
       {
         id: uuidv4(),
@@ -29,7 +29,7 @@ class Parent extends Component {
         isDone: false,
         isEditToggle: false,
         isButtonToggle: false,
-        isPriority: false,
+        isFavorite: false,
       },
     ],
     inputWish: "",
@@ -114,8 +114,30 @@ class Parent extends Component {
     });
   };
 
+  helperFunctionToggleFavorite = (id) => {
+    return this.state.wishList.map((item) => {
+      if (item.id === id) {
+        item.isFavorite = !item.isFavorite;
+      }
+      return item;
+    });
+  };
 
-
+  handleFavoriteClick = (id, index, isFavorite) => {
+    if (isFavorite === true) {
+      let toggleFavoriteArray = this.helperFunctionToggleFavorite(id);
+          this.setState({
+            wishList: toggleFavoriteArray,
+          });
+          return;
+        }
+    let toggleFavoriteArray = this.helperFunctionToggleFavorite(id);
+    let splicedTargetArray = toggleFavoriteArray.splice(index, 1);
+    let newReorderedArray = [...splicedTargetArray, ...toggleFavoriteArray];
+    this.setState({
+      wishList: newReorderedArray
+    });
+  }
 
   render() {
     return (
@@ -132,7 +154,7 @@ class Parent extends Component {
           handleIsDone={this.handleIsDone}
           editToggle={this.editToggle}
           editUpdateWish={this.editUpdateWish}
-          priority={this.priority}
+          handleFavoriteClick={this.handleFavoriteClick}
         />
       </div>
     );
